@@ -36,12 +36,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                //Ограничение доступа к URL-адресам
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/open").permitAll();
                     auth.anyRequest().authenticated();
                 })
-                //Использование базовой аутентификации
+                .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .build();
     }
