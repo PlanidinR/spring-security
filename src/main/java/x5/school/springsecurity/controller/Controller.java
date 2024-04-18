@@ -4,15 +4,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class HelloController {
+public class Controller {
 
-    @GetMapping("/open")
+    @GetMapping("/about")
     public String hello() {
-        return "Привет, Spring Security!";
+        return "Привет, это урок о пользователях и ролях!";
     }
 
-    @GetMapping("/close")
+    @GetMapping("/admin")
     public String disableMethod() {
-        return "Этот эндпоинт закрыт";
+        return "Этот эндпоин";
     }
 }
