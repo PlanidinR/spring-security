@@ -1,18 +1,19 @@
 package x5.school.springsecurity.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
-@RestController
+@org.springframework.stereotype.Controller
 public class Controller {
 
-    @GetMapping("/about")
-    public String hello() {
-        return "Привет, это урок о пользователях и ролях!";
+    @GetMapping("/login")
+    public String login() {
+        return "login";
     }
 
-    @GetMapping("/admin")
-    public String disableMethod() {
-        return "Этот эндпоин";
+    @GetMapping("/success")
+    public String success() {
+        return "success";
     }
 }
