@@ -22,6 +22,10 @@ public class User {
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
 
+    public UUID getId() {
+        return id;
+    }
+
     public String getUsername() {
         return username;
     }

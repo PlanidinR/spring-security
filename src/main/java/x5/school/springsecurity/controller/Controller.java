@@ -1,19 +1,15 @@
 package x5.school.springsecurity.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@org.springframework.stereotype.Controller
+@RestController
 public class Controller {
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
-
-    @GetMapping("/success")
-    public String success() {
-        return "success";
+    @GetMapping("/admin")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String disableMethod() {
+        return "Этот эндпоин только для админа";
     }
 }
