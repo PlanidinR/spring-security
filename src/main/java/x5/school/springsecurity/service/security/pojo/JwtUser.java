@@ -12,10 +12,6 @@ public class JwtUser implements Principal {
         this.name = name;
     }
 
-    public UUID id() {
-        return id;
-    }
-
     public String getName() {
         return name;
     }
