@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import x5.school.springsecurity.service.security.CustomAuthorizationManager;
 import x5.school.springsecurity.service.security.JwtAuthenticationEntryPoint;
 import x5.school.springsecurity.service.security.JwtFilter;
 
@@ -22,24 +24,21 @@ public class SecurityConfig {
 
     private final AuthenticationConfiguration authConfiguration;
     private final JwtFilter jwtFilter;
+    private final CustomAuthorizationManager customAuthorizationManager;
 
-    public SecurityConfig(AuthenticationConfiguration authConfiguration, JwtFilter jwtFilter) {
+    public SecurityConfig(AuthenticationConfiguration authConfiguration, JwtFilter jwtFilter, CustomAuthorizationManager customAuthorizationManager) {
         this.authConfiguration = authConfiguration;
         this.jwtFilter = jwtFilter;
+        this.customAuthorizationManager = customAuthorizationManager;
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/login").permitAll();
-                    auth.anyRequest().authenticated();
-                })
-                .exceptionHandling(handle ->
-                        handle
-                                .authenticationEntryPoint(jwtAuthenticationEntryPoint()))
-                .addFilterAt(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .csrf(csrf ->
+                        csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+                .authorizeHttpRequests(auth ->
+                        auth.anyRequest().access(customAuthorizationManager))
                 .build();
     }
 
